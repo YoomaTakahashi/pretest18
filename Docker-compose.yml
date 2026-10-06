@@ -20,7 +20,7 @@ services:
       - mysql
     container_name: Backend_Container
     ports: ["3001:3001"]
-    command: npx -y nodemon -L index.js
+    command: npm run dev
     restart: always
     volumes:
       - ./backend:/app
@@ -33,7 +33,7 @@ services:
       JWT_SECRET: "Tee&Kate"
       CHOKIDAR_USEPOLLING: true
     networks: ["app-network"]
-  
+
   phpmyadmin:
     image: phpmyadmin
     depends_on:
@@ -46,7 +46,7 @@ services:
       PMA_USER: root
       PMA_PASSWORD: 1234
     networks: ["app-network"]
-
+  
   mysql:
     image: mysql
     container_name: MYSQL_Container
