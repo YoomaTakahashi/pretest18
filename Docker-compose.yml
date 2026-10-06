@@ -5,7 +5,7 @@ services:
       - backend
     container_name: Frontend_Container
     ports: ["3000:3000"]
-    command: npm run dev -- --hsot 0.0.0.0
+    command: npm run dev -- --host 0.0.0.0
     restart: always
     volumes:
       - ./frontend:/app
@@ -20,7 +20,7 @@ services:
       - mysql
     container_name: Backend_Container
     ports: ["3001:3001"]
-    command: npm -y nodemon -L index.js
+    command: npm run dev
     restart: always
     volumes:
       - ./backend:/app
