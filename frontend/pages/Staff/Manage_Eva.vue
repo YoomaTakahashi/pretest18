@@ -57,8 +57,8 @@
                                     <td class="border text-center">{{ items.username }}</td>
                                     <td class="border text-center">
                                         <center>
-                                            <v-btn class="text-center text-white ma-2" color="warning" @click="edit(items)">แก้ไข</v-btn>
-                                            <v-btn class="text-center text-white ma-2" @click="del(items.id_member)">ลบ</v-btn>
+                                            <v-btn class="text-center text-white ma-2" color="warning" size="small" @click="edit(items)">แก้ไข</v-btn>
+                                            <v-btn class="text-center text-white ma-2" color="error" size="small" @click="del(items.id_member)">ลบ</v-btn>
                                         </center>
                                     </td>
                                 </tr>
@@ -95,6 +95,17 @@ const form = ref({
     password:'',
     role:''
 })
+const reset = ()=>{
+    form.value = {
+        id_member:null,
+        fname:'',
+        lname:'',
+        email:'',
+        username:'',
+        password:'',
+        role:''
+    }
+}
 const emailRegex = /^[^\s]+@[^\s]+\.[^\s]{2,}$/i
 function validateForm(){
     const f = form.value
@@ -131,16 +142,58 @@ const saveMember = async()=>{
     }
     try {
         f.id_member 
-        ? await axios.put(`${staff}/member/update/${f.id_member}`,form.value,{headers:{Authorization:`Bearer ${token}`}})
-        : await axios.put(`${staff}/member/update`,form.value,{headers:{Authorization:`Bearer ${token}`}})
+        ? await axios.put(`${staff}/member/update/${f.id_member}`,payload,{headers:{Authorization:`Bearer ${token}`}})
+        : await axios.post(`${staff}/member/save`,{...payload,password:f.password},{headers:{Authorization:`Bearer ${token}`}})
         alert('ทำรายการสำเร็จ')
-        navigateTo('/',{replace:true})
+        await fetch()
+        await reset()
 
     } catch (error) {
-        console.error("error regis",error);
+        console.error("error savemember",error);
         
     }
 }
+
+const fetch = async()=>{
+    try {
+        
+        const res = await axios.get(`${staff}/member/showE`,{headers:{Authorization:`Bearer ${token}`}})
+        dataResult.value = res.data
+
+    } catch (error) {
+        console.error("error member",error);
+        
+    }
+}
+
+const result = computed(()=>{
+    if(!search.value)return dataResult.value
+    const s = search.value.toLowerCase()
+
+    return dataResult.value.filter((items)=>{
+        return(
+            items.username?.toLowerCase().includes(s)
+        )
+    })
+})
+
+const edit = (items:any)=>{
+    form.value = {...items}
+}
+
+const del = async(id_member:number)=>{
+    if(!confirm("ต้องการลบข้อมูลชุดนี้ใช่หรือไม่"))return
+    try {
+        await axios.delete(`${staff}/member/delete/${id_member}`,{headers:{Authorization:`Bearer ${token}`}})
+        await fetch()
+        await reset()
+    } catch (error) {
+        console.error("error",error);
+        
+    }
+}
+
+onMounted(fetch)
 </script>
 
 <style scoped>

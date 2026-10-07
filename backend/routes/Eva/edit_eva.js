@@ -18,14 +18,15 @@ router.get('/',verifyToken,requireRole('ผู้รับการประเ�
 router.put('/',verifyToken,requireRole('ผู้รับการประเมินผล'),async(req,res)=>{
     try {
         const id_member = req.user.id_member
-        const {fname,lname,username,email,password,role} = req.body
+        const {fname,lname,email,username,password,role} = req.body
         if(password && password.trim()){
             const hash = await bc.hash(password,10)
-            await db.query(`update tb_member set fname=?,lname=?,username=?,password=?,role=? where id_member=?`,[fname,lname,username,hash,role,id_member])
+            const [rows] = await db.query(`update tb_member set fname=?,lname=?,email=?,username=?,password=?,role=? where id_member = ?`,[fname,lname,email,username,hash,role,id_member])
+            res.json(rows)
         }else{
-            await db.query(`update tb_member set fname=?,lname=?,username=?,role=? where id_member=?`,[fname,lname,username,role,id_member])
+            const [rows] = await db.query(`update tb_member set fname=?,lname=?,email=?,username=?,role=? where id_member = ?`,[fname,lname,email,username,role,id_member])
+            res.json(rows)
         }
-        res.json({message:'Put memeber success!!!'})
     } catch (error) {
         console.error('error put user',error)
         res.status(500).json({message:'error put user'})

@@ -83,26 +83,29 @@ function validateForm(){
 
     if(!f.username.trim())error.value.username = 'กรุณากรอกชื่อผู้ใช้'
     else if(f.username.trim().length < 4)error.value.username = 'ชื่อผู้ใช้ต้องยาวอย่างน้อย 4 ตัวอักษร'
+    if(!f.role.trim())error.value.role = 'กรุณาเลือกประเภทสมาชิก'
 
     if(!f.password){
-        if(!f.password.trim())error.value.password = 'กรุณากรอกรหัสผ่าน'
-        else if(f.password.trim().length < 6)error.value.password = 'รหัสผ่านต้องยาวอย่างน้อย 6 ตัวอักษร'
+        return Object.keys(error.value).length === 0
+    }else{
+        if(f.password.trim().length < 6)error.value.password = 'รหัสผ่านต้องยาวอย่างน้อย 6 ตัวอักษร'
         else if(f.password.trim() != conP.value.trim())error.value.conP = 'รหัสผ่านไม่ตรงกัน'
     }
 
     
 
-    if(!f.role.trim())error.value.role = 'กรุณาเลือกประเภทสมาชิก'
+    
 
     return Object.keys(error.value).length === 0
 }
 
 const saveMember = async()=>{
-    if(!validateForm())return
     const token = localStorage.getItem('token')
+    if(!validateForm())return
+   
     try {
         
-        await axios.post(`${eva}/edit_eva/`,form.value,{headers:{Authorization:`Bearer ${token}`}})
+        await axios.put(`${eva}/edit_eva`,form.value,{headers:{Authorization:`Bearer ${token}`}})
         alert('แก้ไขสำเร็จ')
         window.location.reload()
 
@@ -115,7 +118,7 @@ const saveMember = async()=>{
 const fecth =async()=>{
     const token = localStorage.getItem('token')
     try {
-        const res = await axios.get(`${eva}/edit_eva/`,{headers:{Authorization:`Bearer ${token}`}})
+        const res = await axios.get(`${eva}/edit_eva`,{headers:{Authorization:`Bearer ${token}`}})
         form.value = res.data
     } catch (error) {
         console.error('error get user',error)
