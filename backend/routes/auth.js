@@ -10,7 +10,7 @@ const router = express.Router()
 router.post('/regis',async(req,res)=>{
     try {
         
-        const form = JSON.parse(req.body)
+        const form = JSON.parse(req.body.form)
         const pic_user = req.files?.pic_user
 
         let filename = null
