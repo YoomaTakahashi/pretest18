@@ -1,5 +1,5 @@
 const express =require('express')
-const db = require('../')
+const db = require('../db')
 const router = express.Router()
 const {verifyToken,requireRole} = require('../middleware/authmiddleware')
 
@@ -13,4 +13,4 @@ router.get('/',verifyToken,async (req,res) => {
         res.status(500).json({message:'error get user'})
     }
 })
-module.export = router
+module.exports = router
