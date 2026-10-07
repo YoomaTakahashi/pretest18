@@ -20,7 +20,7 @@
                                     <td class="text-center border">{{ index+1 }}</td>
                                     <td class="text-center border">{{ items.fname }}</td>
                                     <td class="text-center border">{{ items.lname }}</td>
-                                    <td class="text-center border">{{ items.deva }}</td>
+                                    <td class="text-center border">{{ items.day_eva }}</td>
                                     <td class="text-center border">
                                         <v-btn color="blue" class="text-white" size="small" @click="go(items.id_eva)">ตรวจสอบ</v-btn>
                                     </td>
