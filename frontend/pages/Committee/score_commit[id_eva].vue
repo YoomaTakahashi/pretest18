@@ -29,7 +29,7 @@
                         <v-card color="green"  type="success">คะแนนรวมที่ได้ : {{ user.total_eva }} คะแนน</v-card>
                     </div>
                 </v-form>
-                <v-alert variant="tonal" type="warning" v-else-if="user.status_commit === 'n'">ยังไม่ได้ประเมินตนเอง</v-alert>
+                <v-alert variant="tonal" type="warning" v-else-if="user.status_commit === 'n'">ยังไม่ได้ประเมิน</v-alert>
                 <v-alert variant="tonal" type="error" v-else>ไม่มีแบบประเมิน</v-alert>
             </v-col>
         </v-row>
@@ -54,19 +54,19 @@ const fecth = async()=>{
         console.error('error get user')
     }
 }
-const fecthTopic = async()=>{
+const fetchTopics = async () =>{
     const token = localStorage.getItem('token')
-    try {
+    try{
         const res = await axios.get(`${commit}/score_commit/topic/${id_eva}`,{headers:{Authorization:`Bearer ${token}`}})
         topics.value = res.data
-        res.data.forEach((s:any)=> s.indicates.forEach((i:any)=> totalScore.value += (i.score_commit*i.point_indicate)))
-    } catch (error) {
-        console.error('error get user')
+        res.data.forEach((s:any) => s.indicates.forEach((i:any) => totalScore.value += (i.score_commit*i.point_indicate)))
+    }catch(err){
+        console.error('Error Get Profile!',err)
     }
 }
 
 onMounted(async()=>{
-    await Promise.all([fecth(),fecthTopic()])
+    await Promise.all([fecth(),fetchTopics()])
 })
 
 

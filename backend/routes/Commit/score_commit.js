@@ -15,7 +15,7 @@ router.get('/user/:id_eva',verifyToken,requireRole('กรรมการปร�
     }
 })
 
-router.get('/scores',verifyToken,requireRole('ผู้รับการประเมินผล'),async(req,res)=>{
+router.get('/topic/:id_eva',verifyToken,requireRole('กรรมการประเมิน'),async(req,res)=>{
     try {
         const id_member = req.user.id_member
         const id_eva = req.params.id_eva
@@ -29,9 +29,10 @@ router.get('/scores',verifyToken,requireRole('ผู้รับการปร�
             statusCommit = 4
         }
         const [topics] = await db.query(`select * from tb_topic`)
-        const [indicates] = await db.query(`select * from tb_indicate i,tb_evadetail d where d.id_indicate=i.id_indicate and status_eva=? and id_eva=? `,[statusCommit,id_eva])
-        const result = topics.map(t=>({
-            ...t, indicates:indicates.filter((i)=> i.id_topic === t.id_topic)
+        const [indicates] = await db.query(`select * from tb_indicate i,tb_evadetail d where i.id_indicate=d.id_indicate and status_eva=? and id_eva=?`,[statusCommit,id_eva])
+        const result = topics.map(t =>({
+            ...t,
+            indicates:indicates.filter((i) => i.id_topic === t.id_topic)
         }))
         res.json(result)
     } catch (error) {
