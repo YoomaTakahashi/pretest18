@@ -20,6 +20,9 @@ app.use('/api/profile',profile)
 const auth = require('./routes/auth')
 app.use('/api/auth',auth)
 
+const docnoe = require('./routes/docnoe')
+app.use('/api/docnoe',docnoe)
+
 //api eva
 
 const edit_eva = require('./routes/Eva/edit_eva')
