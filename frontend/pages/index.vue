@@ -69,12 +69,16 @@ const login = async()=>{
         })
         console.log("Login success",res.data)
         localStorage.setItem('token',res.data.token)
-        const useRole = res.data.
-        alert('ทำรายการสำเร็จ')
-        navigateTo('/',{replace:true})
+        const useRole = res.data.role
+        if(useRole === 'ฝ่ายบุคลากร')useRouter().push('/Staff')
+        if(useRole === 'ผู้รับการประเมินผล')useRouter().push('/Evaluatee')
+        if(useRole === 'กรรมการประเมิน')useRouter().push('/Committee')
 
-    } catch (error) {
-        console.error("error regis",error);
+        alert('ทำรายการสำเร็จ')
+
+    } catch (err:any) {
+        console.error("error login",err);
+        error.value = err.response?.data?.message || 'เข้าสู่ระบบไม่สำเร็จ'
         
     }
 }
