@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Oct 07, 2026 at 07:20 AM
+-- Generation Time: Oct 07, 2026 at 07:22 AM
 -- Server version: 26.7.0
 -- PHP Version: 8.3.35
 
@@ -20,6 +20,87 @@ SET time_zone = "+00:00";
 --
 -- Database: `pretest18`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_commit`
+--
+
+CREATE TABLE `tb_commit` (
+  `id_commit` int NOT NULL,
+  `id_member` int NOT NULL,
+  `id_eva` int NOT NULL,
+  `status_commit` varchar(100) NOT NULL,
+  `level_commit` varchar(100) NOT NULL,
+  `detail_commit` text,
+  `signature` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_doc`
+--
+
+CREATE TABLE `tb_doc` (
+  `id_doc` int NOT NULL,
+  `name_doc` varchar(100) NOT NULL,
+  `day_doc` date NOT NULL,
+  `file` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_eva`
+--
+
+CREATE TABLE `tb_eva` (
+  `id_eva` int NOT NULL,
+  `id_member` int NOT NULL,
+  `id_sys` int NOT NULL,
+  `status_eva` int NOT NULL,
+  `day_eva` date NOT NULL,
+  `total_eva` double(10,2) DEFAULT NULL,
+  `total_commit` double(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tb_eva`
+--
+
+INSERT INTO `tb_eva` (`id_eva`, `id_member`, `id_sys`, `status_eva`, `day_eva`, `total_eva`, `total_commit`) VALUES
+(1, 2, 1, 2, '2026-10-04', 30.00, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_evadetail`
+--
+
+CREATE TABLE `tb_evadetail` (
+  `id_detail` int NOT NULL,
+  `id_eva` int NOT NULL,
+  `id_indicate` int NOT NULL,
+  `status_eva` int NOT NULL,
+  `detail_eva` text,
+  `score_member` int DEFAULT NULL,
+  `score_commit` int DEFAULT NULL,
+  `file_eva` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tb_evadetail`
+--
+
+INSERT INTO `tb_evadetail` (`id_detail`, `id_eva`, `id_indicate`, `status_eva`, `detail_eva`, `score_member`, `score_commit`, `file_eva`) VALUES
+(1, 1, 1, 1, 'test', 2, NULL, NULL),
+(2, 1, 2, 1, 'testagsdfg', 4, NULL, NULL),
+(3, 1, 1, 1, 'test', 2, NULL, NULL),
+(4, 1, 2, 1, 'testagsdfg', 4, NULL, NULL),
+(5, 1, 1, 1, 'test', 2, NULL, NULL),
+(6, 1, 2, 1, 'testagsdfg', 4, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -44,9 +125,100 @@ INSERT INTO `tb_indicate` (`id_indicate`, `id_topic`, `name_indicate`, `detail_i
 (1, 1, 'ระบบaiคุณภาพสูง', 'ประเมินความถูกต้อง ครบถ้วน และเป็นไปตามมาตรฐานของงานที่ได้รับมอบหมาย', 1, 'y'),
 (2, 1, 'ความตรงต่อเวลา', 'ประเมินความสามารถในการดำเนินงานและส่งมอบงานภายในระยะเวลาที่กำหนด', 2, 'ืn');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_member`
+--
+
+CREATE TABLE `tb_member` (
+  `id_member` int NOT NULL,
+  `fname` varchar(100) NOT NULL,
+  `lname` varchar(100) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `role` enum('ฝ่ายบุคลากร','ผู้รับการประเมินผล','กรรมการประเมิน') NOT NULL,
+  `pic_user` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tb_member`
+--
+
+INSERT INTO `tb_member` (`id_member`, `fname`, `lname`, `username`, `password`, `email`, `role`, `pic_user`) VALUES
+(1, 'mainpoint', 'mainpoint', 'mainpoint', '$2b$10$OBTengfW8DWFtxIdsknBBeRlY2NrA/i1p2J0GZYLHGdHV2fDSobkm', 'mainpoint@gmail.com', 'ผู้รับการประเมินผล', '1791343225256.png'),
+(2, 'evauser', 'evauser', 'evauser', '$2b$10$NcodSB1B5VsW3hoMTXaMReGZqM7VYutP1C3b0e3u0I0YprusB.E0e', 'evauser@hotmail.com', 'ผู้รับการประเมินผล', '1791351942069.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_system`
+--
+
+CREATE TABLE `tb_system` (
+  `id_sys` int NOT NULL,
+  `day_open` date NOT NULL,
+  `day_out` date NOT NULL,
+  `round_sys` int NOT NULL,
+  `year_sys` int NOT NULL,
+  `status_sys` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tb_system`
+--
+
+INSERT INTO `tb_system` (`id_sys`, `day_open`, `day_out`, `round_sys`, `year_sys`, `status_sys`) VALUES
+(1, '2026-10-01', '2035-10-11', 1, 2569, 'y');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_topic`
+--
+
+CREATE TABLE `tb_topic` (
+  `id_topic` int NOT NULL,
+  `name_topic` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tb_topic`
+--
+
+INSERT INTO `tb_topic` (`id_topic`, `name_topic`) VALUES
+(1, 'ระบบ ai'),
+(2, 'สุขภาพ'),
+(3, 'เครืองยนต์');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tb_commit`
+--
+ALTER TABLE `tb_commit`
+  ADD PRIMARY KEY (`id_commit`);
+
+--
+-- Indexes for table `tb_doc`
+--
+ALTER TABLE `tb_doc`
+  ADD PRIMARY KEY (`id_doc`);
+
+--
+-- Indexes for table `tb_eva`
+--
+ALTER TABLE `tb_eva`
+  ADD PRIMARY KEY (`id_eva`);
+
+--
+-- Indexes for table `tb_evadetail`
+--
+ALTER TABLE `tb_evadetail`
+  ADD PRIMARY KEY (`id_detail`);
 
 --
 -- Indexes for table `tb_indicate`
@@ -55,14 +227,74 @@ ALTER TABLE `tb_indicate`
   ADD PRIMARY KEY (`id_indicate`);
 
 --
+-- Indexes for table `tb_member`
+--
+ALTER TABLE `tb_member`
+  ADD PRIMARY KEY (`id_member`);
+
+--
+-- Indexes for table `tb_system`
+--
+ALTER TABLE `tb_system`
+  ADD PRIMARY KEY (`id_sys`);
+
+--
+-- Indexes for table `tb_topic`
+--
+ALTER TABLE `tb_topic`
+  ADD PRIMARY KEY (`id_topic`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `tb_commit`
+--
+ALTER TABLE `tb_commit`
+  MODIFY `id_commit` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_doc`
+--
+ALTER TABLE `tb_doc`
+  MODIFY `id_doc` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_eva`
+--
+ALTER TABLE `tb_eva`
+  MODIFY `id_eva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_evadetail`
+--
+ALTER TABLE `tb_evadetail`
+  MODIFY `id_detail` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_indicate`
 --
 ALTER TABLE `tb_indicate`
   MODIFY `id_indicate` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_member`
+--
+ALTER TABLE `tb_member`
+  MODIFY `id_member` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_system`
+--
+ALTER TABLE `tb_system`
+  MODIFY `id_sys` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_topic`
+--
+ALTER TABLE `tb_topic`
+  MODIFY `id_topic` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
