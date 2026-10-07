@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-row jusify="center">
+        <v-row justify="center">
             <v-col cols="12" md="8">
                 <v-card color="#7d0c14">
                     <v-card-title>
@@ -40,16 +40,13 @@
 </template>
 
 <script setup lang="ts">
-import axios from 'axios'
 import auth from '~/API/auth'
-import { api } from '~/API/base'
 
 definePageMeta({
     layout: false
 })
 
 const error = ref('')
-const pic_user = ref<File | null>(null)
 
 const typeR = ['ฝ่ายบุคลากร','ผู้รับการประเมินผล','กรรมการประเมิน']
 const show = ref(false)
