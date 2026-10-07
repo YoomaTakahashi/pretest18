@@ -24,6 +24,9 @@ app.use('/api/auth',auth)
 const docnoe = require('./routes/docnoe')
 app.use('/api/docnoe',docnoe)
 
+const dash = require('./routes/dash')
+app.use('/api/dash',dash)
+
 //staff api
 
 const member = require('./routes/Staff/member.js')
@@ -54,6 +57,7 @@ const status = require('./routes/Staff/status')
 app.use('/api/Staff/status',status)
 
 
+
 //api eva
 
 const edit_eva = require('./routes/Eva/edit_eva')
@@ -71,6 +75,12 @@ app.use('/api/Eva/score_commit',score_commit)
 //คอมมิท
 const show_eva = require('./routes/Commit/show_eva')
 app.use('/api/Commit/show_eva',show_eva)
+
+const check = require('./routes/Commit/check')
+app.use('/api/Commit/check',check)
+
+const score_commit3 = require('./routes/Commit/score_commit')
+app.use('/api/Commit/score_commit',score_commit3)
 
 app.use((req,res)=> res.status(404).json({message:'Route not found'}))
 app.listen(3001,()=>{

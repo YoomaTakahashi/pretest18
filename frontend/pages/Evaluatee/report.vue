@@ -50,6 +50,9 @@
                             </v-row>
                         </v-card>
                     </div>
+                    <div class="mt-5 text-center">
+                        <v-btn color="warning" class="no-p" @click="print">พิมพ์</v-btn>
+                    </div>
                 </v-form>
                 <v-alert variant="tonal" type="warning" v-else-if="user.status_eva === 1">ยังไม่ได้ประเมินตนเอง</v-alert>
                 <v-alert variant="tonal" type="error" v-else>ไม่มีแบบประเมิน</v-alert>
@@ -68,6 +71,9 @@ const topics = ref<any>([])
 const commits = ref<any>([])
 const scores = ref<any>([])
 
+const print = async()=>{
+    window.print()
+}
 const fecth = async()=>{
     const token = localStorage.getItem('token')
     try {
