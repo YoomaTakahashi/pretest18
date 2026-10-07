@@ -38,7 +38,18 @@
                     <div class="text-end pa-2 mt-4">
                         <v-card color="green"  type="success">คะแนนรวมสุทธิ : {{ ((user.total_commit)/3).toFixed(2) }} คะแนน</v-card>
                     </div>
-                    <div class=""></div>
+                    <div class="mt-2 pa-2">
+                        <v-card class="pa-2">
+                            <label for="">ข้อเสนอแนะของกรรมการ</label>
+                            <v-row>
+                                <v-col cols="12" v-for="commit,c in commits" :key="commit.id_commit">
+                                    <img :src="`http://localhost:3001/signature/${commit.signature}`" :alt="`รอ${commit.level_commit}ประเมิน`" width="20%"> <br>
+                                    ( {{ commit.fname }} {{ commit.lname }}) <br>
+                                    {{ commit.level_commit }}
+                                </v-col>
+                            </v-row>
+                        </v-card>
+                    </div>
                 </v-form>
                 <v-alert variant="tonal" type="warning" v-else-if="user.status_eva === 1">ยังไม่ได้ประเมินตนเอง</v-alert>
                 <v-alert variant="tonal" type="error" v-else>ไม่มีแบบประเมิน</v-alert>
@@ -49,6 +60,7 @@
 
 <script setup lang="ts">
 import axios from 'axios';
+import { compileTemplate } from 'vue/compiler-sfc';
 import { eva } from '~/API/base';
 
 const user = ref<any>({})
