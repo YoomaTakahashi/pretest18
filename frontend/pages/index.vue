@@ -7,8 +7,8 @@
                         <center><v-img src="/img/logo.png" width="20%" class="mt-3"></v-img></center>
                         <h1 class="text-center text-h5">เข้าสู่ระบบ</h1>
                     </v-card-title>
-                    <v-card-text>
-                        <br>
+                    <v-card-text class="bg-white">
+                        <br> 
                         <v-alert type="error" variant="tonal" v-if="error">{{ error }}</v-alert>
                         <v-form @submit.prevent="login">
                             <v-row justify="center">
@@ -69,12 +69,16 @@ const login = async()=>{
         })
         console.log("Login success",res.data)
         localStorage.setItem('token',res.data.token)
-        const useRole = res.data.
-        alert('ทำรายการสำเร็จ')
-        navigateTo('/',{replace:true})
+        const useRole = res.data.role
+        if(useRole === 'ฝ่ายบุคลากร')useRouter().push('/Staff')
+        if(useRole === 'ผู้รับการประเมินผล')useRouter().push('/Evaluatee')
+        if(useRole === 'กรรมการประเมิน')useRouter().push('/Committee')
 
-    } catch (error) {
-        console.error("error regis",error);
+        alert('ทำรายการสำเร็จ')
+
+    } catch (err:any) {
+        console.error("error login",err);
+        error.value = err.response?.data?.message || 'เข้าสู่ระบบไม่สำเร็จ'
         
     }
 }
