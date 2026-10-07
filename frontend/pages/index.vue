@@ -7,8 +7,8 @@
                         <center><v-img src="/img/logo.png" width="20%" class="mt-3"></v-img></center>
                         <h1 class="text-center text-h5">เข้าสู่ระบบ</h1>
                     </v-card-title>
-                    <v-card-text>
-                        <br>
+                    <v-card-text class="bg-white">
+                        <br> 
                         <v-alert type="error" variant="tonal" v-if="error">{{ error }}</v-alert>
                         <v-form @submit.prevent="login">
                             <v-row justify="center">
