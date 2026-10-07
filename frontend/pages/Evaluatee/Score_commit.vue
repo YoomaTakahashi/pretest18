@@ -86,7 +86,7 @@ const fecthTopic = async()=>{
 const fecthScore = async()=>{
     const token = localStorage.getItem('token')
     try {
-        const res = await axios.get(`${eva}/score_commit/score`,{headers:{Authorization:`Bearer ${token}`}})
+        const res = await axios.get(`${eva}/score_commit/scores`,{headers:{Authorization:`Bearer ${token}`}})
         scores.value = res.data
     } catch (error) {
         console.error('error get user')
