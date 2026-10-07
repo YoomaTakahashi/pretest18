@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import { api } from '~/API/base'
+import { api, staff } from '~/API/base'
 
 
 const error = ref<Record<string,string>>({})
@@ -85,7 +85,7 @@ const typeR = ['ผู้รับการประเมินผล']
 const show = ref(false)
 const showPw = ref(false)
 const dataResult = ref([])
-const search = 
+const search = ref('')
 const form = ref({
     id_member:null,
     fname:'',
@@ -116,14 +116,23 @@ function validateForm(){
     return Object.keys(error.value).length === 0
 }
 
+const token = import.meta.client ? localStorage.getItem('token'):null
 const saveMember = async()=>{
     if(!validateForm())return
-    const formdata = new FormData
-    formdata.append('form',JSON.stringify(form.value))
-    formdata.append('pic_user',pic_user.value!)
+    const f = form.value
+    const payload = {
+        fname:f.fname,
+        lname:f.lname,
+        email:f.email,
+        username:f.username,
+        password:f.password,
+        role:f.role,
+        ...(f.password ? {password:f.password}:null)
+    }
     try {
-        
-        await axios.post(`${api}/auth/regis`,formdata)
+        f.id_member 
+        ? await axios.put(`${staff}/member/update/${f.id_member}`,form.value,{headers:{Authorization:`Bearer ${token}`}})
+        : await axios.put(`${staff}/member/update`,form.value,{headers:{Authorization:`Bearer ${token}`}})
         alert('ทำรายการสำเร็จ')
         navigateTo('/',{replace:true})
 
