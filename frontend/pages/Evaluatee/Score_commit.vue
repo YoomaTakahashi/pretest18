@@ -38,6 +38,16 @@
                     <div class="text-end pa-2 mt-4">
                         <v-card color="green"  type="success">คะแนนรวมสุทธิ : {{ ((user.total_commit)/3).toFixed(2) }} คะแนน</v-card>
                     </div>
+                    <div class="mt-2 pa-2">
+                        <v-card class="pa-2">
+                            <label for="">ข้อเสนอแนะของกรรมการ</label>
+                            <v-row>
+                                <v-col cols="12" v-for="commit,c in commits" :key="commit.id_commit">
+                                    {{ c+1 }} {{ commit.level_commit }} : {{ commit.detail_commit || 'รอการประเมิน' }}
+                                </v-col>
+                            </v-row>
+                        </v-card>
+                    </div>
                 </v-form>
                 <v-alert variant="tonal" type="warning" v-else-if="user.status_eva === 1">ยังไม่ได้ประเมินตนเอง</v-alert>
                 <v-alert variant="tonal" type="error" v-else>ไม่มีแบบประเมิน</v-alert>
