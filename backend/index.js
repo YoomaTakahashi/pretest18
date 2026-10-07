@@ -1,21 +1,22 @@
+require('dotenv').config({path:'.env'})
 const express = require('express')
 const cors = require('cors')
-
+const path = require('path')
 const app = express()
-const port = Number(process.env.PORT || 3001)
+const fileUp =require('express-fileupload')
 
-app.use(cors())
+app.use(cors({
+    origin:'http://localhost:3000',
+    credentials: true
+}))
+
+app.use(fileUp())
 app.use(express.json())
+app.use('/uploads',express.static(path.join(__dirname,'./uploads')))
 
-app.get('/health', (_req, res) => {
-  res.json({ status: 'ok' })
-})
+const profile = require('./routes/profile.js')
+app.use('/api/profile',profile)
 
-<<<<<<< HEAD
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Backend listening on port ${port}`)
-})
-=======
 const auth = require('./routes/auth')
 app.use('/api/auth',auth)
 
@@ -36,9 +37,12 @@ app.use('/api/Eva/score_member',score_member)
 const score_commit = require('./routes/Eva/score_commit')
 app.use('/api/Eva/score_commit',score_commit)
 
+//คอมมิท
+const show_eva = require('./routes/Commit/show_eva')
+app.use('/api/Commit/show_eva',show_eva)
+
 app.use((req,res)=> res.status(404).json({message:'Route not found'}))
 app.listen(3001,()=>{
     console.log("Server Running on Port 3001");
     
 })
->>>>>>> eb7d3b9f9957920c4eeaefa64d07c52bd5239820
