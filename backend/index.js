@@ -14,6 +14,8 @@ app.use(fileUp())
 app.use(express.json())
 app.use('/uploads',express.static(path.join(__dirname,'./uploads')))
 
+const profile = require('./routes/profile.js')
+app.use('/api/profile',profile)
 
 app.use((req,res)=> res.status(404).json({message:'Route not found'}))
 app.listen(3001,()=>{

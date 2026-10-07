@@ -1,50 +1,72 @@
 <template>
     <v-container>
-        <v-row jusify="center">
+        <v-row justify="center">
             <v-col cols="12" md="12">
                 <v-card>
                     <v-card-title>
-                        <h1 class="text-center text-h5">สมัครสมาชิก</h1>
+                        <h1 class="text-center text-h5">จัดการผู้รับการประเมินผล</h1>
                     </v-card-title>
-                    <v-card-text class="bg-white">
+                    <v-card-text>
                         <br>
                         <v-form @submit.prevent="saveMember">
                             <v-row justify="center">
                                 <v-col cols="12" md="6">
-                                    <v-text-field lable="ชื่อ" v-model="form.fname" :error-messages="error.fname"></v-text-field>
+                                    <v-text-field label="ชื่อ" v-model="form.fname" :error-messages="error.fname"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-text-field lable="นามสกุล" v-model="form.lname" :error-messages="error.lname"></v-text-field>
+                                    <v-text-field label="นามสกุล" v-model="form.lname" :error-messages="error.lname"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-text-field lable="อีเมล" v-model="form.email" :error-messages="error.email" prepend-inner-icon="mdi-email"></v-text-field>
+                                    <v-text-field label="อีเมล" v-model="form.email" :error-messages="error.email" prepend-inner-icon="mdi-email"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="6">
-                                    <v-text-field lable="ชื่อผู้ใช้" v-model="form.username" :error-messages="error.username" prepend-inner-icon="mdi-account"></v-text-field>
+                                    <v-text-field label="ชื่อผู้ใช้" v-model="form.username" :error-messages="error.username" prepend-inner-icon="mdi-account"></v-text-field>
                                 </v-col>
-                                <v-col cols="12" md="6">
-                                    <v-text-field lable="รหัสผ่าน" v-model="form.password" :error-messages="error.password" :prepend-inner-icon="show ? 'mdi-eye':'mdi-eye-off'" :type="showPw ? 'text':'password'" @click:prepend-inner="show = !show , showPw = !showPw"></v-text-field>
+                                <v-col cols="12" md="12">
+                                    <v-text-field label="รหัสผ่าน" v-model="form.password" :error-messages="error.password" :prepend-inner-icon="show ? 'mdi-eye':'mdi-eye-off'" :type="showPw ? 'text':'password'" @click:prepend-inner="show = !show , showPw = !showPw"></v-text-field>
                                 </v-col>
-                                <v-col cols="12" md="6">
-                                    <v-text-field lable="ยืนยันรหัสผ่าน" v-model="conP" :error-messages="error.conP" :prepend-inner-icon="show2 ? 'mdi-eye':'mdi-eye-off'" :type="showPw2 ? 'text':'password'" @click:prepend-inner="show2 = !show2 , showPw2 = !showPw2"></v-text-field>
-                                </v-col>
-                                <v-col cols="12" md="6">
-                                    <v-select lable="ประเภทสมาชิก" v-model="form.role" :error-messages="error.role" prepend-inner-icon="mdi-account-group" :items="typeR"></v-select>
-                                </v-col>
-                                <v-col cols="12" md="6">
-                                    <v-file-input lable="รูปภาพสมาชิก" v-model="pic_user" :error-messages="error.pic_user" accept=".png , .jpg" persistent-hint hint="รองรับเฉพาะไฟล์ PNG และ JPG"></v-file-input>
+                                <v-col cols="12" md="12">
+                                    <v-select label="ประเภทสมาชิก" v-model="form.role" :error-messages="error.role" prepend-inner-icon="mdi-account-group" :items="typeR"></v-select>
                                 </v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="12" md="12">
                                     <center>
-                                        <v-btn class="text-center ma-2" color="primary" type="submit">สมัครสมาชิก</v-btn>
+                                        <v-btn class="text-center ma-2" color="primary" type="submit">{{ form.id_member ? 'อัปเดต':'บันทึก' }}</v-btn>
                                         <v-btn class="text-center ma-2" color="error" type="reset">ยกเลิก</v-btn>
                                     </center>
                                 </v-col>
                             </v-row>
                         </v-form>
-                        <nuxt-link to="/" class="text-center text-blue text-decoration-none"><p>หากมีบัญชีอยู่แล้ว? เข้าสู่ระบบ</p></nuxt-link>
+                        <v-text-field class="mt-3" v-model="search" prepend-inner-icon="mdi-magnify"></v-text-field>
+                        <v-table class="mt-3">
+                            <thead>
+                                <tr>
+                                    <th class="border text-center">ลำดับ</th>
+                                    <th class="border text-center">ชื่อ-สกุล</th>
+                                    <th class="border text-center">อีเมล</th>
+                                    <th class="border text-center">ชื่อผู้ใช้</th>
+                                    <th class="border text-center">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(items,index) in result" :key="items.id_member">
+                                    <td class="border text-center">{{ index+1 }}</td>
+                                    <td class="border text-center">{{ items.fname }} {{ items.lname }}</td>
+                                    <td class="border text-center">{{ items.email }}</td>
+                                    <td class="border text-center">{{ items.username }}</td>
+                                    <td class="border text-center">
+                                        <center>
+                                            <v-btn class="text-center text-white ma-2" color="warning" @click="edit(items)">แก้ไข</v-btn>
+                                            <v-btn class="text-center text-white ma-2" @click="del(items.id_member)">ลบ</v-btn>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center text-red" colspan="12" v-if="result.length === 0">ไม่พบข้อมูล</td>
+                                </tr>
+                            </tbody>
+                        </v-table>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -56,19 +78,16 @@
 import axios from 'axios'
 import { api } from '~/API/base'
 
-definePageMeta({
-    layout: false
-})
 
 const error = ref<Record<string,string>>({})
 const pic_user = ref<File | null>(null)
-const conP = ref('')
-const typeR = ['ฝ่ายบุคลากร','ผู้รับการประเมินผล','กรรมการประเมิน']
+const typeR = ['ผู้รับการประเมินผล']
 const show = ref(false)
-const show2 = ref(false)
 const showPw = ref(false)
-const showPw2 = ref(false)
+const dataResult = ref([])
+const search = 
 const form = ref({
+    id_member:null,
     fname:'',
     lname:'',
     email:'',
@@ -91,7 +110,6 @@ function validateForm(){
 
     if(!f.password.trim())error.value.password = 'กรุณากรอกรหัสผ่าน'
     else if(f.password.trim().length < 6)error.value.password = 'รหัสผ่านต้องยาวอย่างน้อย 6 ตัวอักษร'
-    else if(f.password.trim() != conP.value.trim())error.value.conP = 'รหัสผ่านไม่ตรงกัน'
 
     if(!f.role.trim())error.value.role = 'กรุณาเลือกประเภทสมาชิก'
 

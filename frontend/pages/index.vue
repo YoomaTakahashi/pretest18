@@ -13,13 +13,13 @@
                         <v-form @submit.prevent="login">
                             <v-row justify="center">
                                 <v-col cols="12" md="12">
-                                    <v-text-field lable="ชื่อผู้ใช้" v-model="username"  prepend-inner-icon="mdi-account"></v-text-field>
+                                    <v-text-field label="ชื่อผู้ใช้" v-model="username"  prepend-inner-icon="mdi-account"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="12">
-                                    <v-text-field lable="รหัสผ่าน" v-model="password" :prepend-inner-icon="show ? 'mdi-eye':'mdi-eye-off'" :type="showPw ? 'text':'password'" @click:prepend-inner="show = !show , showPw = !showPw"></v-text-field>
+                                    <v-text-field label="รหัสผ่าน" v-model="password" :prepend-inner-icon="show ? 'mdi-eye':'mdi-eye-off'" :type="showPw ? 'text':'password'" @click:prepend-inner="show = !show , showPw = !showPw"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="12">
-                                    <v-select lable="ประเภทสมาชิก" v-model="role" prepend-inner-icon="mdi-account-group" :items="typeR"></v-select>
+                                    <v-select label="ประเภทสมาชิก" v-model="role" prepend-inner-icon="mdi-account-group" :items="typeR"></v-select>
                                 </v-col>
                             </v-row>
                             <v-row>
