@@ -17,7 +17,7 @@ app.use('/uploads',express.static(path.join(__dirname,'./uploads')))
 const profile = require('./routes/profile.js')
 app.use('/api/profile',profile)
 
-const auth = require('./routes/auth.js')
+const auth = require('./routes/auth')
 app.use('/api/auth',auth)
 
 //staff api
@@ -42,6 +42,10 @@ app.use('/api/Staff/commit',commit)
 
 const doc = require('./routes/Staff/doc.js')
 app.use('/api/Staff/doc',doc)
+//api eva
+
+const edit_eva = require('./routes/Eva/edit_eva')
+app.use('/api/Eva/edit_eva',edit_eva)
 
 app.use((req,res)=> res.status(404).json({message:'Route not found'}))
 app.listen(3001,()=>{
