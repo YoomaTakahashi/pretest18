@@ -52,7 +52,7 @@ const roles = [
     {title:'หน้าหลัก',to:'/Staff/',role:'ฝ่ายบุคลากร'},
     {title:'จัดการผู้รับการประเมินผล',to:'/Staff/Manage_eva',role:'ฝ่ายบุคลากร'},
     {title:'จัดการกรรมการประเมิน',to:'/Staff/Manage_commit',role:'ฝ่ายบุคลากร'},
-    {title:'จัดการหัวข้อการชี้วัด',to:'/Staff/topic',role:'ฝ่ายบุคลากร'},
+    {title:'จัดการหัวข้อการประเมิน',to:'/Staff/topic',role:'ฝ่ายบุคลากร'},
     {title:'จัดการตัวชี้วัด',to:'/Staff/indicate',role:'ฝ่ายบุคลากร'},
     {title:'จัดการรอบการประเมิน',to:'/Staff/round',role:'ฝ่ายบุคลากร'},
     {title:'จัดการแบบการประเมิน',to:'/Staff/eva',role:'ฝ่ายบุคลากร'},

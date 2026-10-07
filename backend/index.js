@@ -25,6 +25,24 @@ app.use('/api/auth',auth)
 const member = require('./routes/Staff/member.js')
 app.use('/api/Staff/member',member)
 
+const topic = require('./routes/Staff/topic')
+app.use('/api/Staff/topic',topic)
+
+const indicate = require('./routes/Staff/indicate.js')
+app.use('/api/Staff/indicate',indicate)
+
+const system = require('./routes/Staff/system.js')
+app.use('/api/Staff/system',system)
+
+const eva = require('./routes/Staff/eva.js')
+app.use('/api/Staff/eva',eva)
+
+const commit = require('./routes/Staff/commit.js')
+app.use('/api/Staff/commit',commit)
+
+const doc = require('./routes/Staff/doc.js')
+app.use('/api/Staff/doc',doc)
+
 app.use((req,res)=> res.status(404).json({message:'Route not found'}))
 app.listen(3001,()=>{
     console.log("Server Running on Port 3001");
