@@ -27,10 +27,10 @@
                                     <td class="text-center pa-2 " style="width: 10%;">{{ indicate.detail_indicate }}</td>
                                     <td class="text-center pa-2 " style="width: 10%;">{{ indicate.point_indicate }}</td>
                                     <td class="text-center pa-2 " style="width: 10%;">{{ indicate.point_indicate *4 }}</td>
-                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.indicate]?. a ?? 'รอประธานประเมิน' }}</td>
-                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.indicate]?. b ?? 'รอกรรมการประเมิน' }}</td>
-                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.indicate]?. c ?? 'รอเลขาประเมิน' }}</td>
-                                    <td class="text-center pa-2 " style="width: 10%;">{{ (((scores[indicate.indicate]?. a ?? 0)+(scores[indicate.indicate]?. b ?? 0)+(scores[indicate.indicate]?. c ?? 0))/3).toFixed(2)  }}</td>
+                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.id_indicate]?.a ?? 'รอประธานประเมิน' }}</td>
+                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.id_indicate]?.b ?? 'รอกรรมการประเมิน' }}</td>
+                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.id_indicate]?.c ?? 'รอเลขาประเมิน' }}</td>
+                                    <td class="text-center pa-2 " style="width: 10%;">{{ (((scores[indicate.id_indicate]?. a ?? 0)+(scores[indicate.id_indicate]?. b ?? 0)+(scores[indicate.id_indicate]?. c ?? 0))/3).toFixed(2)  }}</td>
                                 </tr>
                             </v-table>
                         </v-col>

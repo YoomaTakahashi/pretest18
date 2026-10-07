@@ -20,8 +20,8 @@ router.get('/scores/:id_eva',verifyToken,requireRole('ฝ่ายบุคล�
         const [rows] = await db.query(`select * from tb_indicate i,tb_evadetail d where d.id_indicate=i.id_indicate and status_eva in (2,3,4) and id_eva=? `,[id_eva])
         const scores = {}
         rows.map(row=>{
-            if(!scores[rows.id_indicate]){
-                scores[rows.id_indicate]={
+            if(!scores[row.id_indicate]){
+                scores[row.id_indicate]={
                     a:null,
                     b:null,
                     c:null,
