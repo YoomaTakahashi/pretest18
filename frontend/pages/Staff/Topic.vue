@@ -4,7 +4,7 @@
             <v-col cols="12" md="12">
                 <v-card>
                     <v-card-title>
-                        <h1 class="text-center text-h5">จัดการหัวข้อการชี้วัด</h1>
+                        <h1 class="text-center text-h5">จัดการหัวข้อการประเมิน</h1>
                     </v-card-title>
                     <v-card-text>
                         <br>
