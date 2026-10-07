@@ -20,6 +20,11 @@ app.use('/api/profile',profile)
 const auth = require('./routes/auth.js')
 app.use('/api/auth',auth)
 
+//staff api
+
+const member = require('./routes/Staff/member.js')
+app.use('/api/Staff/member',member)
+
 app.use((req,res)=> res.status(404).json({message:'Route not found'}))
 app.listen(3001,()=>{
     console.log("Server Running on Port 3001");
