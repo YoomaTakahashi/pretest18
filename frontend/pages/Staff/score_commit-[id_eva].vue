@@ -27,26 +27,16 @@
                                     <td class="text-center pa-2 " style="width: 10%;">{{ indicate.detail_indicate }}</td>
                                     <td class="text-center pa-2 " style="width: 10%;">{{ indicate.point_indicate }}</td>
                                     <td class="text-center pa-2 " style="width: 10%;">{{ indicate.point_indicate *4 }}</td>
-                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.id_indicate]?. a ?? 'รอประธานประเมิน' }}</td>
-                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.id_indicate]?. b ?? 'รอกรรมการประเมิน' }}</td>
-                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.id_indicate]?. c ?? 'รอเลขาประเมิน' }}</td>
+                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.id_indicate]?.a ?? 'รอประธานประเมิน' }}</td>
+                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.id_indicate]?.b ?? 'รอกรรมการประเมิน' }}</td>
+                                    <td class="text-center pa-2 " style="width: 10%;">{{ scores[indicate.id_indicate]?.c ?? 'รอเลขาประเมิน' }}</td>
                                     <td class="text-center pa-2 " style="width: 10%;">{{ (((scores[indicate.id_indicate]?. a ?? 0)+(scores[indicate.id_indicate]?. b ?? 0)+(scores[indicate.id_indicate]?. c ?? 0))/3).toFixed(2)  }}</td>
                                 </tr>
                             </v-table>
                         </v-col>
                     </v-row>
                     <div class="text-end pa-2 mt-4">
-                        <v-card color="green"  type="success">คะแนนรวมสุทธิ : {{ ((user.total_commit)/3).toFixed(2) }} คะแนน</v-card>
-                    </div>
-                    <div class="mt-2 pa-2">
-                        <v-card class="pa-2">
-                            <label for="">ข้อเสนอแนะของกรรมการ</label>
-                            <v-row>
-                                <v-col cols="12" v-for="commit,c in commits" :key="commit.id_commit">
-                                    {{ c+1 }} {{ commit.level_commit }} : {{ commit.detail_commit || 'รอการประเมิน' }}
-                                </v-col>
-                            </v-row>
-                        </v-card>
+                        <v-card color="green" class="pa-3" type="success">คะแนนรวมสุทธิ : {{ ((user.total_commit)/3).toFixed(2) }} คะแนน</v-card>
                     </div>
                 </v-form>
                 <v-alert variant="tonal" type="warning" v-else-if="user.status_eva === 1">ยังไม่ได้ประเมินตนเอง</v-alert>
@@ -58,17 +48,19 @@
 
 <script setup lang="ts">
 import axios from 'axios';
-import { eva } from '~/API/base';
+import { eva, staff } from '~/API/base';
 
 const user = ref<any>({})
 const topics = ref<any>([])
 const commits = ref<any>([])
 const scores = ref<any>([])
 
+const id_eva = useRoute().params.id_eva
+
 const fecth = async()=>{
     const token = localStorage.getItem('token')
     try {
-        const res = await axios.get(`${eva}/selfeva/user`,{headers:{Authorization:`Bearer ${token}`}})
+        const res = await axios.get(`${staff}/score_commit/user/${id_eva}`,{headers:{Authorization:`Bearer ${token}`}})
         user.value = res.data
     } catch (error) {
         console.error('error get user')
@@ -77,7 +69,7 @@ const fecth = async()=>{
 const fecthTopic = async()=>{
     const token = localStorage.getItem('token')
     try {
-        const res = await axios.get(`${eva}/selfeva/topic`,{headers:{Authorization:`Bearer ${token}`}})
+        const res = await axios.get(`${staff}/score_commit/topic/${id_eva}`,{headers:{Authorization:`Bearer ${token}`}})
         topics.value = res.data
     } catch (error) {
         console.error('error get user')
@@ -86,8 +78,8 @@ const fecthTopic = async()=>{
 const fecthScore = async()=>{
     const token = localStorage.getItem('token')
     try {
-        const res = await axios.get(`${eva}/score_commit/scores`,{headers:{Authorization:`Bearer ${token}`}})
-        scores.value = res.data
+        const res = await axios.get(`${staff}/score_commit/scores/${id_eva}`,{headers:{Authorization:`Bearer ${token}`}})
+        scores.value = res.data.scores
     } catch (error) {
         console.error('error get user')
     }
@@ -95,7 +87,7 @@ const fecthScore = async()=>{
 const fecthCommit = async()=>{
     const token = localStorage.getItem('token')
     try {
-        const res = await axios.get(`${eva}/score_commit/commit`,{headers:{Authorization:`Bearer ${token}`}})
+        const res = await axios.get(`${staff}/score_commit/commit/${id_eva}`,{headers:{Authorization:`Bearer ${token}`}})
         commits.value = res.data
     } catch (error) {
         console.error('error get user')

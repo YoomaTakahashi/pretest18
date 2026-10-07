@@ -20,8 +20,44 @@ app.use('/api/profile',profile)
 const auth = require('./routes/auth')
 app.use('/api/auth',auth)
 
+
 const docnoe = require('./routes/docnoe')
 app.use('/api/docnoe',docnoe)
+
+<<<<<<< HEAD
+const dash = require('./routes/dash')
+app.use('/api/dash',dash)
+=======
+//staff api
+
+const member = require('./routes/Staff/member.js')
+app.use('/api/Staff/member',member)
+
+const topic = require('./routes/Staff/topic')
+app.use('/api/Staff/topic',topic)
+
+const indicate = require('./routes/Staff/indicate.js')
+app.use('/api/Staff/indicate',indicate)
+
+const system = require('./routes/Staff/system.js')
+app.use('/api/Staff/system',system)
+
+const eva = require('./routes/Staff/eva.js')
+app.use('/api/Staff/eva',eva)
+
+const commit = require('./routes/Staff/commit.js')
+app.use('/api/Staff/commit',commit)
+
+const score_member2 = require('./routes/Staff/score_member.js')
+app.use('/api/Staff/score_member',score_member2)
+
+const score_commit2 = require('./routes/Staff/score_commit')
+app.use('/api/Staff/score_commit',score_commit2)
+
+const status = require('./routes/Staff/status')
+app.use('/api/Staff/status',status)
+
+>>>>>>> f0656138fcdd2bb9af4f250fd81822af166a53b3
 
 //api eva
 
@@ -41,6 +77,7 @@ app.use('/api/Eva/score_commit',score_commit)
 const show_eva = require('./routes/Commit/show_eva')
 app.use('/api/Commit/show_eva',show_eva)
 
+<<<<<<< HEAD
 const save_score = require('./routes/Commit/save_score')
 app.use('/api/Commit/save_score',save_score)
 
@@ -48,6 +85,16 @@ const score_member2 = require('./routes/Commit/score_member')
 app.use('/api/Commit/score_member',score_member2)
 
 
+=======
+const check = require('./routes/Commit/check')
+app.use('/api/Commit/check',check)
+
+const score_commit2 = require('./routes/Commit/score_commit')
+app.use('/api/Commit/score_commit',score_commit2)
+
+const signature = require('./routes/Commit/signature')
+app.use('/api/Commit/signature',signature)
+>>>>>>> 7d316523d482d54b088c6536a0e48613b48f4cac
 
 app.use((req,res)=> res.status(404).json({message:'Route not found'}))
 app.listen(3001,()=>{

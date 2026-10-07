@@ -1,16 +1,38 @@
 <template>
     <v-container>
         <v-card>
-            <v-sheet class="pa-5 text-center" :elevation="5" rounded>
+            <v-sheet class="pa-5 text-center" >
                 <h1 class="font-weight-bold">DashBoard - Evaluatee</h1>
             </v-sheet>
-            <v-card-text></v-card-text>
+            <v-card-text>
+                <v-row>
+                    <v-col cols="12" md="4" v-for="b in box" :key="b">
+                         <v-card :elevation="5" rounded="5" class="pa-5">
+                            <div class="text-center ">{{ b.title }}</div>
+                            <div class="text-center">{{ b.value }}</div>
+                         </v-card>
+                    </v-col>
+                </v-row>
+            </v-card-text>
         </v-card>
     </v-container>
 </template>
 
 <script setup lang="ts">
+import axios from 'axios';
+import { api,eva } from '~/API/base';
 
+const box = ref([])
+const fetch = async()=>{
+    const token = localStorage.getItem('token')
+    try {
+        const res = await axios.get(`${api}/dash/eva`,{headers:{Authorization:`Bearer ${token}`}})
+        box.value = res.data.box
+    } catch (error) {
+        console.error("error doc",error);
+    }
+}
+onMounted(fetch)
 </script>
 
 <style scoped>
